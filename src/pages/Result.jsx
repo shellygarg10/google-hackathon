@@ -1,8 +1,44 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
-import { mockResults } from '../data/mockData';
 
+const mockResults = {
+    quizName: "Mathematics Quiz",
+    totalQuestions: 3,
+    correctQuestions: 2,
+    incorrectQuestions: 1,
+    questions: [
+      {
+        id: 1,
+        type: 'mcq',
+        question: "What is the capital of France?",
+        userAnswer: "Paris",
+        correctAnswer: "Paris",
+        isCorrect: true,
+        feedback: "Correct! Paris is indeed the capital of France. It's also known as the 'City of Light' and is the largest city in France."
+      },
+      {
+        id: 2,
+        type: 'mcq',
+        question: "Which planet is known as the Red Planet?",
+        userAnswer: "Mars",
+        correctAnswer: "Mars",
+        isCorrect: true,
+        feedback: "Excellent! Mars appears red because of the iron oxide (rust) on its surface. It's the fourth planet from the Sun."
+      },
+      {
+        id: 3,
+        type: 'text',
+        question: "Explain the concept of photosynthesis in your own words:",
+        userAnswer: "Photosynthesis is the process where plants make their own food using sunlight. They take in water from the soil and carbon dioxide from the air, then use sunlight to convert these into glucose and oxygen.",
+        correctAnswer: "Photosynthesis is the process by which plants convert light energy into chemical energy. Using sunlight, water, and carbon dioxide, plants produce glucose and oxygen. This process occurs in the chloroplasts, specifically using the green pigment chlorophyll.",
+        isCorrect: false,
+        feedback: "Your answer covers the basic concept but lacks some key details. Consider mentioning chloroplasts, chlorophyll, and the specific forms of energy conversion. Your explanation could be more technical and precise."
+      }
+    ],
+    aiResponse: "Overall, you demonstrated a good understanding of general knowledge questions. Your multiple-choice responses were accurate, but there's room for improvement in detailed written explanations. Focus on including specific technical terms and processes in your answers."
+  };
+  
 function Result() {
   const naviagte = useNavigate();
   return (

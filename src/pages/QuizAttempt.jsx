@@ -1,7 +1,30 @@
 import React, { useState , useEffect} from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Clock } from 'lucide-react';
-import { quizzes } from '../data/mockData';
+
+const mockQuestions = [
+  {
+    id: 1,
+    type: 'mcq',
+    question: "What is the capital of France?",
+    options: ["London", "Berlin", "Paris", "Madrid"],
+    correctAnswer: "Paris"
+  },
+  {
+    id: 2,
+    type: 'mcq',
+    question: "Which planet is known as the Red Planet?",
+    options: ["Venus", "Mars", "Jupiter", "Saturn"],
+    correctAnswer: "Mars"
+  },
+  {
+    id: 3,
+    type: 'text',
+    question: "Explain the concept of photosynthesis in your own words (minimum 50 words):",
+    correctAnswer: "Photosynthesis is the process by which plants convert light energy into chemical energy. Using sunlight, water, and carbon dioxide, plants produce glucose and oxygen. This process occurs in the chloroplasts, specifically using the green pigment chlorophyll, and is essential for life on Earth as it provides both food and oxygen.",
+    minWords: 50
+  }
+];
 
 function QuizAttempt() {
     const {quizId} = useParams();
@@ -10,8 +33,6 @@ function QuizAttempt() {
   const [answers, setAnswers] = useState({});
   const [timeLeft, setTimeLeft] = useState(30 * 60); // 30 minutes in seconds
 
-  const quizData = quizzes.find(quiz => quiz.id === parseInt(quizId));
-  const questions = quizData ? quizData.questions : [];
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -40,7 +61,7 @@ function QuizAttempt() {
 
 
   const handleNext = () => {
-    if (currentQuestion < questions.length - 1) {
+    if (currentQuestion < mockQuestions.length - 1) {
       setCurrentQuestion(currentQuestion + 1);
     }
   };
@@ -52,10 +73,10 @@ function QuizAttempt() {
   };
 
   const handleSubmit = () => {
-    navigate(`/result/${quizId}`, { state: { answers, questions } });
+    navigate(`/result/${quizId}`, { state: { answers, questions: mockQuestions } });
   };
 
-  const currentQuestionData = questions[currentQuestion];
+  const currentQuestionData = mockQuestions[currentQuestion];
 
   return (
     <div className="max-w-3xl mx-auto">
@@ -80,7 +101,7 @@ function QuizAttempt() {
           <div
             className="h-2 bg-black rounded-full"
             style={{
-              width: `${((currentQuestion + 1) / questions.length) * 100}%`,
+              width: `${((currentQuestion + 1) / mockQuestions.length) * 100}%`,
             }}
           />
         </div>
@@ -90,7 +111,7 @@ function QuizAttempt() {
       {/* Question */}
       <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
         <p className="text-sm text-gray-600 mb-2">
-          Question {currentQuestion + 1} of {questions.length}
+          Question {currentQuestion + 1} of {mockQuestions.length}
         </p>
         <h2 className="text-xl font-semibold mb-4">
           {currentQuestionData.question}
@@ -140,7 +161,7 @@ function QuizAttempt() {
         >
           Previous
         </button>
-        {currentQuestion === questions.length - 1 ? (
+        {currentQuestion === mockQuestions.length - 1 ? (
           <button
             onClick={handleSubmit}
             className="px-4 py-2 bg-gray-200 text-black rounded-md hover:bg-black hover:text-white"
